@@ -45,16 +45,19 @@ function objectUpdateFilter(obj, filter)
      
   end 
 
-  world:addEntity(obj)
+  pi(obj)
+  return world:addEntity(obj)
 
 end
 
 love.handlers.updateObjectFilters = function (objs,filter,...)
- 
-  for _,o in pairs(objs)
-  do
-    objectUpdateFilter(o,filter)
-  end
+  
+  pi( objs ) 
+  -- for _,o in pairs(objs)
+  -- do
+  --   objectUpdateFilter(o,filter)
+  -- end
+
 end
 
 function love.load() 
@@ -126,12 +129,12 @@ function love.keypressed(key, scancode, isrepeat)
       there = true
     }
 
+
     objectUpdateFilter( theObj, filterHereToThere )
-    pi( theObj )
-    world:addEntity(theObj)
+
     -- local objs = {}
     -- objs[1] = theObj
-    -- love.event.push("updateObjectFilters",objs, filterHereToThere ) 
+    love.event.push("updateObjectFilters",theObj, filterHereToThere ) 
 
   end
     
