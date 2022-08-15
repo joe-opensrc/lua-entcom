@@ -1,0 +1,9 @@
+
+define event object (table):
+  - name
+  - callback
+
+create a tiny-system with an 'Any' filter:
+  add an event object to entities for each event recieved
+
+
