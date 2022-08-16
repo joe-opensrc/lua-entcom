@@ -84,6 +84,15 @@ function System:setFilterLogic(x)
   self.entities:setFilterLogic(x)
 end
 
+function System:matchEntities() 
+  --
+  --   if self.match == true
+  --     if large[k] == k
+  --   else
+  --      if large[k]
+  -- 
+end
+
 function Set.size(s)
   s:size()
 end
@@ -116,11 +125,19 @@ function Set:intersects(theirs)
     large = self
   end  
 
-  for k,_ in pairs(small)
+  for k,v in pairs(small)
   do
-    if large[k]
+    if self.metatable.match == true
     then
-      count = count + 1
+      if large[k] == v
+      then
+        count = count + 1
+      end
+    else
+      if large[k]
+      then
+        count = count + 1
+      end
     end
   end
 
@@ -169,6 +186,7 @@ end
 
 -- internal function to 
 function System:_update()
+
   if self.dynamicRefresh
   then
     -- refresh entities list
@@ -186,10 +204,11 @@ function System:refresh(filter)
   -- update list of entities with possibly modified filter
 end
 
-local airlock = System.new({ y = true; x = true; z = true })
-
+local airlock = System.new({ a = true; x = 1; z = true })
+airlock.entities.metatable.match = true
+airlock:setFilterLogic("any")
+pi(airlock.entities)
 -- airlock:refresh({ x = true })
--- airlock:setFilterLogic("any")
 -- pi(airlock)
 pi( airlock:addEntity( {x=1; y=2} ))
 -- pi(airlock.entities)
