@@ -26,7 +26,7 @@ System.metatable.__index = System -- System.defaults
 
 function System.new(f)
   local self = setmetatable({}, System.metatable)  
-  self.entities = {}
+  self.entities = Set.new({})
   self.options = {}
   self.overrideFilter = false
   self.dynamicRefresh = false
@@ -34,9 +34,10 @@ function System.new(f)
   return self
 end
 
+
 -- Set equality for filter test?
 Set = {}
-Set.metatable = {}
+Set.metatable = { allOrAny = "any" }
 Set.metatable.__index = Set
 
 -- Set.metatable.__eq = function(s1,s2)
@@ -56,9 +57,18 @@ Set.metatable.__index = Set
 -- end
 
 
+function Set:getFilterLogic()
+  return self.metatable.allOrAny
+end
+
+function Set:setFilterLogic(x)
+  assert( ( x == "all" or x == "any" ), "Invalid Value: must be 'all' or 'any'" )
+  self.metatable.allOrAny = x
+end
+
 function Set.new(t)
+  assert( type(t) ~= nil, "Check table?" )
   local self = setmetatable({}, Set.metatable)  
-  local t = t or {}
   for k,_ in pairs(t) do self[k] = true end
   return self 
 end
@@ -67,18 +77,20 @@ function System:parseFilter(f)
   -- string parse to Set? 
 end
 
+
 function Set.size(s)
   s:size()
 end
 
 function Set:size()
   local count = 0
-  for _ in pairs(self)
+  for x in pairs(self)
   do
+    -- print("X:" .. x )
     count = count + 1 
   end
 
-  return count
+  return count 
 end
 
 function Set:intersects(theirs)
@@ -106,11 +118,21 @@ function Set:intersects(theirs)
     end
   end
 
-  if Set.size(small) == count
-  then
-    return true
-  end
+  -- print( "c:" .. count )
+  -- print( "s:" .. Set.size(small) )
+  -- print( "l:" .. Set.size(large) )
 
+  -- any
+  -- if count > 0 and count <= Set.size(small) 
+  --
+  -- all
+  -- print(self:getFilterLogic())
+  if self:getFilterLogic() == "any"
+  then
+    return ( count > 0 and count <= Set.size(small) )
+  else
+    return count == small:size()
+  end
   return false  
   
 end
@@ -118,6 +140,7 @@ end
 function System:addEntity(ent)
   local ents = self.entities
   -- pi(Set(self.filter))
+  -- pi(ent)
   if isEmpty(self.filter)
   then  
     ents[#ents+1] = ent
@@ -147,10 +170,20 @@ function System:_update()
 end
 
 function System:refresh(filter)
+
+  if filter
+  then
+    self.filter = filter 
+  end
   -- update list of entities with possibly modified filter
 end
 
-local airlock = System.new({ x = true })
+local airlock = System.new({ x = true; y = true; z = true })
+airlock.entities:setFilterLogic("all")
+
+-- airlock:refresh({ x = true })
+-- airlock:setFilterLogic("all")
 -- pi(airlock)
-pi( airlock:addEntity({x=1; y=2}))
+--
+pi( airlock:addEntity( {x=1; y=2} ))
 -- pi(airlock.entities)
