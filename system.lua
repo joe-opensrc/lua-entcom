@@ -84,8 +84,9 @@ function System:setFilterLogic(x)
   self.entities:setFilterLogic(x)
 end
 
-function System:matchEntities() 
-  --
+function System:filterEntities(exact) 
+  local inter = self.entities:intersection(self.filter) 
+  print(inter)
   --   if self.match == true
   --     if large[k] == k
   --   else
@@ -109,12 +110,20 @@ function Set:size()
 end
 
 function Set:intersects(theirs)
+  local inter = self:intersection(theirs)
+  return inter:size() > 0
+end
+
+function Set:intersection(theirs)
 
   assert( theirs ~= nil, "Check '.' vs ':' ! :D" )
   local ourSize = self:size()
-  local theirSize = theirs:size()
+  local theirSize = Set.size(theirs)
   local which = nil
-  local count = 0
+
+  local small = {}
+  local large = {}
+  local ret = {}
 
   if ourSize <= theirSize
   then
@@ -125,38 +134,24 @@ function Set:intersects(theirs)
     large = self
   end  
 
-  for k,v in pairs(small)
+  for k,_ in pairs(small)
   do
-    if self.metatable.match == true
-    then
-      if large[k] == v
+      if self.metatable.match == true
       then
-        count = count + 1
+        if large[k] == k
+        then
+          ret[k] = k
+        end
+      else
+        print("bar")
+        if large[k]
+        then
+          ret[k] = k
+        end
       end
-    else
-      if large[k]
-      then
-        count = count + 1
-      end
-    end
   end
 
-  -- print( "c:" .. count )
-  -- print( "s:" .. Set.size(small) )
-  -- print( "l:" .. Set.size(large) )
-
-  -- any
-  -- if count > 0 and count <= Set.size(small) 
-  --
-  -- all
-  -- print(self:getFilterLogic())
-  if self:getFilterLogic() == "any"
-  then
-    return ( count > 0 and count <= Set.size(small) )
-  else
-    return count == small:size()
-  end
-  return false  
+  return Set.new(ret)
   
 end
 
@@ -207,6 +202,7 @@ end
 local airlock = System.new({ a = true; x = 1; z = true })
 airlock.entities.metatable.match = true
 airlock:setFilterLogic("any")
+airlock:matchEntities()
 pi(airlock.entities)
 -- airlock:refresh({ x = true })
 -- pi(airlock)
