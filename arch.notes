@@ -6,4 +6,6 @@ define event object (table):
 create a tiny-system with an 'Any' filter:
   add an event object to entities for each event recieved
 
-
+--
+System:
+  - can accept entities who do not match filter, but places them in a seperate queue
