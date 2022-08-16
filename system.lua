@@ -81,7 +81,7 @@ function Set:size()
   return count
 end
 
-function Set:contains(theirs)
+function Set:intersects(theirs)
 
   assert( theirs ~= nil, "Check '.' vs ':' ! :D" )
   local ourSize = self:size()
@@ -126,7 +126,7 @@ function System:addEntity(ent)
     local entSet = Set.new(ent)
     local filSet = Set.new(self.filter)
 
-    if entSet:contains(filSet)
+    if entSet:intersects(filSet)
     then
       ents[#ents+1] = ent
       return ent
@@ -152,5 +152,5 @@ end
 
 local airlock = System.new({ x = true })
 -- pi(airlock)
-pi( airlock:addEntity({x=1; y=2}) )
+pi( airlock:addEntity({x=1; y=2}))
 -- pi(airlock.entities)
