@@ -12,3 +12,6 @@ EngineSystem:
   - filters / acts on GameObj.engine data
 WorldSystem:
   - filters / acts on GameObj.world data
+
+
+A System might uuid/hash the fields to prevent re-adding ents
