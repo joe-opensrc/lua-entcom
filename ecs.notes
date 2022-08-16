@@ -1,0 +1,14 @@
+A gameObj is an "enriched" Ent.
+Every Ent has two sections:
+  - engine: which holds data / relations regarding other ents, systems, events, etc
+  - world: which holds data relating to the object within the game world ( position, mass, isGelatinous, etc )
+
+Systems SHOULD admit entities for processing, with optional filtering
+Systems can update dynamically or be manually refreshed
+
+
+A System MIGHT be typed as an EngineSystem or WorldSystem 
+EngineSystem:
+  - filters / acts on GameObj.engine data
+WorldSystem:
+  - filters / acts on GameObj.world data
