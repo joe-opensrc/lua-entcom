@@ -56,7 +56,6 @@ Set.metatable.__index = Set
 --   end
 -- end
 
-
 function Set:getFilterLogic()
   return self.metatable.allOrAny
 end
@@ -77,6 +76,13 @@ function System:parseFilter(f)
   -- string parse to Set? 
 end
 
+function System:getFilterLogic()
+  return self.entities:getFilterLogic()
+end
+
+function System:setFilterLogic(x)
+  self.entities:setFilterLogic(x)
+end
 
 function Set.size(s)
   s:size()
@@ -137,10 +143,12 @@ function Set:intersects(theirs)
   
 end
 
-function System:addEntity(ent)
+function System:addEntity(ent,test)
   local ents = self.entities
+  local test = test or false
   -- pi(Set(self.filter))
-  -- pi(ent)
+    
+  -- if this system doesn't filter
   if isEmpty(self.filter)
   then  
     ents[#ents+1] = ent
@@ -178,12 +186,10 @@ function System:refresh(filter)
   -- update list of entities with possibly modified filter
 end
 
-local airlock = System.new({ x = true; y = true; z = true })
-airlock.entities:setFilterLogic("all")
+local airlock = System.new({ y = true; x = true; z = true })
 
 -- airlock:refresh({ x = true })
--- airlock:setFilterLogic("all")
+-- airlock:setFilterLogic("any")
 -- pi(airlock)
---
 pi( airlock:addEntity( {x=1; y=2} ))
 -- pi(airlock.entities)
