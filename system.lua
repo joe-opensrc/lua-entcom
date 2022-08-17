@@ -48,54 +48,9 @@ function System.new(f)
 end
 
 
--- Set equality for filter test?
-Set = {}
-Set.metatable = { allOrAny = "any" }
-Set.metatable.__index = Set
-
--- Set.metatable.__eq = function(s1,s2)
---   local count = 0
---   for k,_ in pairs(s1) do
---     if s2[k] == true then
---         count = count + 1 
---     end
---   end
-
---   if count == #s1 == #s2 
---   then 
---     return true
---   else
---     return false
---   end
--- end
-
-function Set:getFilterLogic()
-  return self.metatable.allOrAny
-end
-
-function Set:setFilterLogic(x)
-  assert( ( x == "all" or x == "any" ), "Invalid Value: must be 'all' or 'any'" )
-  self.metatable.allOrAny = x
-end
-
-function Set.new(t)
-  assert( type(t) ~= nil, "Check table?" )
-  local self = setmetatable({}, Set.metatable)  
-  for k,_ in pairs(t) do self[k] = true end
-  return self 
-end
-
 function System:parseFilter(f)
   -- string parse to Set? 
 end
-
--- function System:getFilterLogic()
---   return self.entities:getFilterLogic()
--- end
-
--- function System:setFilterLogic(x)
---   self.entities:setFilterLogic(x)
--- end
 
 function System:filterEntities(ents,exact)
   -- printf("options: %s\n\n",  inspect(self.options) )
@@ -119,15 +74,6 @@ function System:filterEntities(ents,exact)
   return ents
 end
 
-util = {}
-function util.size(t)
-  local count = 0
-  for _ in pairs(t)
-  do
-    count = count + 1 
-  end
-  return count 
-end
 
 function System:filterEntity(ent,exact) 
   -- printf("fE: %s\n", inspect(self.filter) )
@@ -186,25 +132,6 @@ function System:filterEntity(ent,exact)
  
   return {}
      
- -- local hit = false
- -- for _,ent in pairs(self.entities)
- -- do
- --   printf("e: %s\n", inspect(ent))
- --   for k,v in pairs( ent )
- --   do
- --     if exact or self.exact
- --     then
- --       hit = ( self.filter[k] == v )
- --       printf("%s = %s\n", inspect(k), inspect(v))
- --     else
- --       hit = ( self.filter[k] ~= nil )
- --       printf("%s exists?\n", inspect( k ) ) 
- --     end
- --     printf("hit: %s\n", inspect(hit) )
- --   end
- -- end
-
-
 end
 
 function Set.size(s)
@@ -308,22 +235,15 @@ function System:refresh(filter)
   -- update list of entities with possibly modified filter
 end
 
-local airlock = System.new({ y = 2; x = 2; a = true })
+return System
 
-airlock.options.exactMatch = true
-airlock.options.matchType = false
-airlock.options.matchAll = false
+-- local airlock = System.new({ y = 2; x = 2; a = true })
 
-airlock.entities = { {x=1; y=3}; { a=false } }
-airlock.options.overrideFilter = true
-pi(airlock:addEntity( { x=1 } ))
-print(inspect(airlock:filterEntities()))
--- pi(airlock.filter)
--- airlock.entities.metatable.match = true
--- airlock:setFilterLogic("any")
--- pi(airlock.entities)
--- airlock:refresh({ x = true })
--- pi(airlock)
--- pi( airlock:addEntity( {x=1; y=2} ))
--- pi( airlock:addEntity( {a=1; b="foo" }))
--- airlock:filterEntities()
+-- airlock.options.exactMatch = true
+-- airlock.options.matchType = false
+-- airlock.options.matchAll = false
+
+-- airlock.entities = { {x=1; y=3}; { a=false } }
+-- airlock.options.overrideFilter = true
+-- pi(airlock:addEntity( { x=1 } ))
+-- print(inspect(airlock:filterEntities()))
