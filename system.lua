@@ -134,82 +134,24 @@ function System:filterEntity(ent,exact)
      
 end
 
-function Set.size(s)
-  s:size()
-end
-
-function Set:size()
-  local count = 0
-  for x in pairs(self)
-  do
-    -- print("X:" .. x )
-    count = count + 1 
-  end
-
-  return count 
-end
-
-function Set:intersects(theirs)
-  local inter = self:intersection(theirs)
-  return inter:size() > 0
-end
-
-function Set:intersection(theirs)
-
-  assert( theirs ~= nil, "Check '.' vs ':' ! :D" )
-  local ourSize = self:size()
-  local theirSize = Set.size(theirs)
-  local which = nil
-
-  local small = {}
-  local large = {}
-  local ret = {}
-
-  if ourSize <= theirSize
-  then
-    small = self
-    large = theirs
-  else
-    small = theirs
-    large = self
-  end  
-
-  for k,_ in pairs(small)
-  do
-      if self.metatable.match == true
-      then
-        if large[k] == k
-        then
-          ret[k] = k
-        end
-      else
-        if large[k]
-        then
-          ret[k] = k
-        end
-      end
-  end
-
-  return Set.new(ret)
-  
-end
-
 function System:addEntity(ent)
   local ents = self.entities
+  -- printf("ent: %s\n", inspect(ent))
   -- if this system doesn't filter
+  -- pi(isEmpty(self.filter))
+  -- pi(self.options.overrideFilter)
   if isEmpty(self.filter) or self.options.overrideFilter 
   then  
     ents[#ents+1] = ent
     return ent
   else
-    local entSet = Set.new(ent)
-    local filSet = Set.new(self.filter)
-
-    if entSet:intersects(filSet)
+    -- printf("ent_post: %s\n", inspect(ent))
+    if not isEmpty(self:filterEntity(ent))
     then
       ents[#ents+1] = ent
       return ent
     end
+
   end 
 
   return {}
