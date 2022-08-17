@@ -26,12 +26,15 @@ System.metatable.__index = System -- System.defaults
 
 function System.new(f)
   local self = setmetatable({}, System.metatable)  
-  self.entities = Set.new({})
-  self.options = {}
-  self.overrideFilter = false
-  self.dynamicRefresh = false
-  self.filter = f or {}
+  self.entities                   = {} -- Set.new({})
+  self.options                    = {}
+  self.options.exactMatch         = false
+  self.options.matchAll           = false
+  self.options.overrideFilter     = false
+  self.dynamicRefresh             = false
+  self.filter                     = f or {}
   return self
+
 end
 
 
@@ -76,22 +79,122 @@ function System:parseFilter(f)
   -- string parse to Set? 
 end
 
-function System:getFilterLogic()
-  return self.entities:getFilterLogic()
+-- function System:getFilterLogic()
+--   return self.entities:getFilterLogic()
+-- end
+
+-- function System:setFilterLogic(x)
+--   self.entities:setFilterLogic(x)
+-- end
+
+function System:filterEntities(ents,exact)
+  -- printf("options: %s\n\n",  inspect(self.options) )
+  local fent = {}
+  local exact = exact or self.options.exactMatch 
+  local ents = ents or self.entities
+  -- pi(#ents)
+  for i, ent in ipairs(ents)
+  do
+    -- printf("%s: %s\n\n",  i, inspect(ent) )
+    fent = self:filterEntity(ent,exact)  
+    -- printf("fent: %s\n",  inspect( fent ) )
+    if isEmpty(fent)
+    then
+      -- printf("<^^SHOULD REMOVE\n")
+      ents[i] = nil
+    end
+    -- fent = {}
+  end
+
+  return ents
 end
 
-function System:setFilterLogic(x)
-  self.entities:setFilterLogic(x)
+util = {}
+function util.size(t)
+  local count = 0
+  for _ in pairs(t)
+  do
+    count = count + 1 
+  end
+  return count 
 end
 
-function System:filterEntities(exact) 
-  local inter = self.entities:intersection(self.filter) 
-  print(inter)
-  --   if self.match == true
-  --     if large[k] == k
-  --   else
-  --      if large[k]
-  -- 
+function System:filterEntity(ent,exact) 
+  -- printf("fE: %s\n", inspect(self.filter) )
+  local exact = exact or self.options.exactMatch 
+  local hit = false
+  local hitCount = 0
+  local fsize = util.size(self.filter)
+  
+  if self.options.overrideFilter
+  then 
+    return ent
+  end
+
+  for k,v in pairs( self.filter )
+  do
+
+    if exact
+    then
+      hit = ( ent[k] == v )
+      -- printf("%s = %s\n", inspect(k), inspect(v))
+    elseif self.options.matchType
+    then
+      hit = ( type(ent[k]) == type(v) )
+      -- printf("to(%s) == to(%s)?\n", type(ent[k]), type(v) )
+    else
+      hit = ( ent[k] ~= nil )
+      -- printf("%s exists?\n", inspect( k ) ) 
+    end
+
+    -- printf("hit: %s\n", inspect(hit) )
+    if hit
+    then
+       -- printf("som: %s\n", inspect(self.options.matchAll) )
+       if not self.options.matchAll 
+       then 
+         return ent
+       else
+         hitCount = hitCount + 1
+       end
+    else
+      if self.options.matchAll
+      then
+        return {}
+      end
+    end
+
+    hit = false
+  end
+
+  -- printf("hc: %d\n",  hitCount )
+  -- print( fsize )
+  if hitCount == fsize
+  then
+   return ent
+  end
+ 
+  return {}
+     
+ -- local hit = false
+ -- for _,ent in pairs(self.entities)
+ -- do
+ --   printf("e: %s\n", inspect(ent))
+ --   for k,v in pairs( ent )
+ --   do
+ --     if exact or self.exact
+ --     then
+ --       hit = ( self.filter[k] == v )
+ --       printf("%s = %s\n", inspect(k), inspect(v))
+ --     else
+ --       hit = ( self.filter[k] ~= nil )
+ --       printf("%s exists?\n", inspect( k ) ) 
+ --     end
+ --     printf("hit: %s\n", inspect(hit) )
+ --   end
+ -- end
+
+
 end
 
 function Set.size(s)
@@ -143,7 +246,6 @@ function Set:intersection(theirs)
           ret[k] = k
         end
       else
-        print("bar")
         if large[k]
         then
           ret[k] = k
@@ -155,13 +257,10 @@ function Set:intersection(theirs)
   
 end
 
-function System:addEntity(ent,test)
+function System:addEntity(ent)
   local ents = self.entities
-  local test = test or false
-  -- pi(Set(self.filter))
-    
   -- if this system doesn't filter
-  if isEmpty(self.filter)
+  if isEmpty(self.filter) or self.options.overrideFilter 
   then  
     ents[#ents+1] = ent
     return ent
@@ -199,12 +298,22 @@ function System:refresh(filter)
   -- update list of entities with possibly modified filter
 end
 
-local airlock = System.new({ a = true; x = 1; z = true })
-airlock.entities.metatable.match = true
-airlock:setFilterLogic("any")
-airlock:matchEntities()
-pi(airlock.entities)
+local airlock = System.new({ y = 2; x = 2; a = true })
+
+airlock.options.exactMatch = true
+airlock.options.matchType = false
+airlock.options.matchAll = false
+
+airlock.entities = { {x=1; y=3}; { a=false } }
+airlock.options.overrideFilter = true
+pi(airlock:addEntity( { x=1 } ))
+print(inspect(airlock:filterEntities()))
+-- pi(airlock.filter)
+-- airlock.entities.metatable.match = true
+-- airlock:setFilterLogic("any")
+-- pi(airlock.entities)
 -- airlock:refresh({ x = true })
 -- pi(airlock)
-pi( airlock:addEntity( {x=1; y=2} ))
--- pi(airlock.entities)
+-- pi( airlock:addEntity( {x=1; y=2} ))
+-- pi( airlock:addEntity( {a=1; b="foo" }))
+-- airlock:filterEntities()
