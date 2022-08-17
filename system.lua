@@ -107,7 +107,7 @@ function System:filterEntity(ent,exact)
     if hit
     then
        -- printf("som: %s\n", inspect(self.options.matchAll) )
-       if not self.options.matchAll 
+       if not ( self.options.matchAll or self.options.matchSub )
        then 
          return ent
        else
@@ -124,10 +124,13 @@ function System:filterEntity(ent,exact)
   end
 
   -- printf("hc: %d\n",  hitCount )
-  -- print( fsize )
+  local hsize = util.size(ent)  
   if hitCount == fsize
   then
    return ent
+  elseif self.options.matchSub and ( hitCount > 0 and hitCount < fsize ) and ( hitCount == hsize )
+  then
+    return ent 
   end
  
   return {}
