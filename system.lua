@@ -2,6 +2,16 @@ package.path = package.path .. ";ext/share/lua/5.1/?.lua"
 local uuid    = require("uuid")
 local inspect = require("inspect")
 
+util = {}
+function util.size(t)
+  local count = 0
+  for _ in pairs(t)
+  do
+    count = count + 1 
+  end
+  return count 
+end
+
 function printf(...)
    local function wrapper(...) io.write(string.format(...)) end
    local status, result = pcall(wrapper, ...)
