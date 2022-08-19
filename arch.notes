@@ -9,3 +9,42 @@ create a tiny-system with an 'Any' filter:
 --
 System:
   - can accept entities who do not match filter, but places them in a seperate queue
+
+
+---
+Systems MAY reference other Systems and pass entities between themselves depeding on logic
+modelled as a DAG?
+
+
+---
+Ents are vanilla for inter-system comms
+Ents MAY BE enriched for intra-system comms / use
+
+---
+advanced filters
+
+having passed the system-filters,
+ents enter a second filtering stage which MAY be arbitary callbacks 
+
+e.g.,
+
+
+
+
+---
+
+
+
+e.g.,
+
+function sys:update()
+  for ent in self.ents
+    doThing(ent)
+    ent.metatable.isProcessed = true
+    ent.metatable.transactionId = uuid()
+  rof
+end
+
+
+
+
