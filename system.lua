@@ -37,6 +37,7 @@ System.metatable.__index = System -- System.defaults
 function System.new(f)
   local self = setmetatable({}, System.metatable)  
   self.entities                   = {} -- Set.new({})
+  self.inactiveEntities           = {}
   self.options                    = {}
   self.options.exactMatch         = false
   self.options.matchAll           = false
@@ -65,7 +66,7 @@ function System:filterEntities(ents,exact)
     -- printf("fent: %s\n",  inspect( fent ) )
     if isEmpty(fent)
     then
-      -- printf("<^^SHOULD REMOVE\n")
+      table.move(ents,i,1,1,self.inactiveEntities)
       ents[i] = nil
     end
     -- fent = {}
@@ -169,6 +170,12 @@ function System:_update()
     -- self.refresh()
   end
   
+
+
+function System:resetEntityLists()
+  local ies = self.inactiveEntities 
+  self.entities = table.move( self.inactiveEntities, 1, #ies, 1, self.entities )
+  self.inactiveEntities = {}
 end
 
 function System:refresh(filter)
