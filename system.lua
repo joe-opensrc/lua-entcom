@@ -164,12 +164,20 @@ end
 -- internal function to 
 function System:_update()
 
-  if self.dynamicRefresh
-  then
-    -- refresh entities list
-    -- self.refresh()
+  self:resetEntityLists() 
+  self:filterEntities()
+  for k,v in pairs(self.entities)
+  do
+    printf("UP: %s\n", inspect( v.x + v.y ))
   end
   
+  -- if self.dynamicRefresh
+  -- then
+  --   -- refresh entities list
+  --   -- self.refresh()
+  -- end
+  
+end
 
 
 function System:resetEntityLists()
