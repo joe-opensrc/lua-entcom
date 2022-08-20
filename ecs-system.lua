@@ -53,12 +53,14 @@ end
 
 
 function System:filterEntity(ent,exact) 
-  -- printf("fE: %s\n", inspect(self.filter) )
+
+  assert( type(ent) == "table", "an entity must be a lua table" )
+
   local exact = exact or self.options.exactMatch 
   local hit = false
   local hitCount = 0
   local fsize = util.size(self.filter)
-  
+ 
   if self.options.overrideFilter
   then 
     return ent
