@@ -15,9 +15,7 @@ local uuid    = require("uuid")
 local inspect = require("inspect")
 local tiny    = require("tiny")
 
-function pi (...)
-  printf("%s: %s\n",  ...,  inspect( ... ) )
-end
+require("utils")
 
 function triggerEvent(name, ...)
   love.handler.push( name, ... )
