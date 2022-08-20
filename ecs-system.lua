@@ -195,3 +195,4 @@ function System:refresh(filter)
   -- update list of entities with possibly modified filter
 end
 
+return System
