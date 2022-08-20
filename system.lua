@@ -1,4 +1,4 @@
-package.path = package.path .. ";ext/share/lua/5.1/?.lua"
+package.path = package.path .. ";ext/share/lua/5.3/?.lua"
 local uuid    = require("uuid")
 local inspect = require("inspect")
 
