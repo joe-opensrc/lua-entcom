@@ -195,15 +195,3 @@ function System:refresh(filter)
   -- update list of entities with possibly modified filter
 end
 
-local airlock = System.new({ y = 2; x = 2; a = true })
-local z = { a = true; x = 1 }
-
-airlock.options.exactMatch = true
--- airlock.options.matchType = true
-airlock.options.matchAll = true -- matchSub might be cool? 
-
-pi(airlock:addEntity(z))
--- airlock.entities = { {x=1; y=3}; { a=false } }
--- airlock.options.overrideFilter = true
--- pi(airlock:addEntity( { x=1 } ))
--- print(inspect(airlock:filterEntities()))
