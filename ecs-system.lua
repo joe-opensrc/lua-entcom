@@ -12,7 +12,7 @@ System.metatable.__index = System -- System.defaults
 
 function System.new(f)
   local self = setmetatable({}, System.metatable)  
-  self.entities                   = {} -- Set.new({})
+  self.entities                   = {}
   self.inactiveEntities           = {}
   self.options                    = {}
   self.options.exactMatch         = false
