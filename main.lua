@@ -1,15 +1,4 @@
-
-
-
--- love.filesystem.setCRequirePath("./ext/lib/luarocks/rocks") 
-love.filesystem.setRequirePath("ext/share/lua/5.1/?.lua")
-
-
-function printf(...)
-   local function wrapper(...) io.write(string.format(...)) end
-   local status, result = pcall(wrapper, ...)
-   if not status then error(result, 2) end
-end
+love.filesystem.setRequirePath("ext/share/lua/5.3/?.lua")
 
 local uuid    = require("uuid")
 local inspect = require("inspect")
