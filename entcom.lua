@@ -4,13 +4,24 @@ local inspect = require("inspect")
 
 require("utils")
 
+EntCom = {}
+-- EntCom.defaults = { entities = {} }
+
+EntCom.metatable = {}
+EntCom.metatable.__index = EntCom -- EntCom.defaults
+
+function EntCom.new()
+  local self = setmetatable({}, EntCom.metatable)   
+  self.systems = {}
+  return self
+end
+
+
 System = {}
--- System.defaults = { entities = {} }
-
 System.metatable = {}
-System.metatable.__index = System -- System.defaults
+System.metatable.__index = System
 
-function System.new(f)
+function EntCom.newSys(f)
   local self = setmetatable({}, System.metatable)  
   self.entities                   = {}
   self.inactiveEntities           = {}
@@ -21,7 +32,6 @@ function System.new(f)
   self.dynamicRefresh             = false
   self.filter                     = f or {}
   return self
-
 end
 
 
@@ -173,4 +183,4 @@ function System:refresh(filter)
   -- update list of entities with possibly modified filter
 end
 
-return System
+return EntCom
