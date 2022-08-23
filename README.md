@@ -1,5 +1,7 @@
-## EntCom -- An Entity Compentent System Framework
+## EntCom 
 
-Written in Lua, mostly for use with Löve :)
+### A Hideously Functional⁽™⁾ ecs-system 
+
+An Entity Compentent System Framework written in Lua, mostly for use with Löve :)
 
 
