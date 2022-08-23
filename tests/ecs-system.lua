@@ -1,7 +1,7 @@
 package.path = package.path .. ";ext/share/lua/5.3/?.lua"
 
 local lu = require('luaunit')
-local System = require("ecs-system")
+local System = require("entcom")
 
 TestCreate = {}
 function TestCreate:testSystemCreateVanilla()
