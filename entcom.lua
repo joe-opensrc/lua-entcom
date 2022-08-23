@@ -4,34 +4,38 @@ local inspect = require("inspect")
 
 require("utils")
 
-EntCom = {}
--- EntCom.defaults = { entities = {} }
-
-EntCom.metatable = {}
-EntCom.metatable.__index = EntCom -- EntCom.defaults
-
-function EntCom.new()
-  local self = setmetatable({}, EntCom.metatable)   
-  self.systems = {}
-  return self
-end
-
-
 System = {}
 System.metatable = {}
 System.metatable.__index = System
 
-function EntCom.newSys(f)
-  local self = setmetatable({}, System.metatable)  
-  self.entities                   = {}
-  self.inactiveEntities           = {}
-  self.options                    = {}
-  self.options.exactMatch         = false
-  self.options.matchAll           = false
-  self.options.overrideFilter     = false
-  self.dynamicRefresh             = false
-  self.filter                     = f or {}
+EntCom = {}
+EntCom.systems = {} 
+EntCom.metatable = {}
+EntCom.metatable.__index = EntCom -- EntCom.defaults
+
+
+function EntCom.new()
+  local self = setmetatable({}, EntCom.metatable)   
   return self
+end
+
+
+
+function EntCom:newSys(f) 
+  local sys = setmetatable({}, System.metatable)  
+  sys.entities                   = {}
+  sys.inactiveEntities           = {}
+  sys.options                    = {}
+  sys.options.exactMatch         = false
+  sys.options.matchAll           = false
+  sys.options.overrideFilter     = false
+  sys.dynamicRefresh             = false
+  sys.filter                     = f or {}
+
+  -- table.insert(EntCom.systems, sys)
+  -- EntCom.systems[uuid()] = sys
+  return sys
+
 end
 
 
