@@ -2,7 +2,7 @@ package.path = package.path .. ";ext/share/lua/5.3/?.lua"
 
 local lu = require('luaunit')
 local ecs = require("entcom")
-local TestSystem = ecs.newSys()
+local TestSystem = ecs:newSys()
 
 TestCreate = {}
 function TestCreate:testSystemCreateVanilla()
@@ -26,7 +26,7 @@ end
 function TestCreate:testSystemCreateWithFilter()
 
   local f = { x = 1, y = 2 } 
-  local sys = ecs.newSys(f)
+  local sys = ecs:newSys(f)
 
   lu.assertIsTable(sys.filter)
   lu.assertEquals(sys.filter, f)
@@ -38,7 +38,7 @@ function TestFilter:setUp()
 
   local f = { x = 1, y = 2 }
 
-  self.sys = ecs.newSys(f)
+  self.sys = ecs:newSys(f)
   self.matchingEntity = { x = 1 }
   
 end
