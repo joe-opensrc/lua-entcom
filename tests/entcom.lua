@@ -1,12 +1,13 @@
 package.path = package.path .. ";ext/share/lua/5.3/?.lua"
 
 local lu = require('luaunit')
-local System = require("entcom")
+local ecs = require("entcom")
+local TestSystem = ecs.newSys()
 
 TestCreate = {}
 function TestCreate:testSystemCreateVanilla()
 
-  local sys = System.new()
+  local sys = TestSystem
 
   lu.assertEquals( type(sys),                 "table" )
   lu.assertEquals( type(sys.options),         "table" )
@@ -25,7 +26,7 @@ end
 function TestCreate:testSystemCreateWithFilter()
 
   local f = { x = 1, y = 2 } 
-  local sys = System.new(f)
+  local sys = ecs.newSys(f)
 
   lu.assertIsTable(sys.filter)
   lu.assertEquals(sys.filter, f)
@@ -37,7 +38,7 @@ function TestFilter:setUp()
 
   local f = { x = 1, y = 2 }
 
-  self.sys = System.new(f)
+  self.sys = ecs.newSys(f)
   self.matchingEntity = { x = 1 }
   
 end
@@ -96,7 +97,7 @@ end
 -- -- { x = 99; y = 2 }
 
 
--- local airlock = System.new({ y = 2; x = 2; a = true })
+-- local airlock = TestSystem.new({ y = 2; x = 2; a = true })
 -- local z = { a = true; x = 2 }
 
 -- airlock.options.exactMatch = true
