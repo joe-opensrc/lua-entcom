@@ -3,18 +3,17 @@ version = "0.1.1-1"
 
 source = {
    url = "git+ssh://git@github.com/joe-opensrc/lua-entcom.git",
-   tag = "v0.1.1"
+   tag = 'v' .. version 
     
 }
 
 description = {
   summary = "A Hideously Functional⁽™⁾ ECS module",
-  detailed = [[[
+  detailed = [[
     An Entity Component System; written in Lua. 
     A framework for wrangling lua tables based on filters.
-    Primarily intended for use with Löve as part of a "game engine" :)
-
-  ]]]
+    Primarily intended for use with Löve as part of a game-engine :)
+  ]],
   homepage = "https://github.com/joe-opensrc/lua-entcom",
   license = "CC BY-SA"
 }
