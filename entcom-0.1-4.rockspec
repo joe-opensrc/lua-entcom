@@ -1,5 +1,5 @@
 package = "entcom"
-version = "0.1-3"
+version = "0.1-4"
 
 source = {
    url = "git+ssh://git@github.com/joe-opensrc/lua-entcom.git",
