@@ -22,6 +22,7 @@ end
 
 
 function EntCom:newSys(f) 
+  assert( ( self ~= nil ), "Call EntCom:newSys() not EntCom.newSys()" )
   local sys = setmetatable({}, System.metatable)  
   sys.entities                   = {}
   sys.inactiveEntities           = {}
