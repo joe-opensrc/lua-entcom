@@ -18,14 +18,14 @@ cp -r entcom.lua entcom/utils.lua /path/to/your/lua/project/libraries
 
 ```
 cd lua-entcom
-luarocks pack entcom-0.1-4.rockspec 
-luarocks install entcom-0.1-4.src.rock # installs globally
+luarocks pack entcom-0.1-5.rockspec 
+luarocks install entcom-0.1-5.src.rock # installs globally
 ```
 
 or
 
 ```
-luarocks install --to=/path/to/your/project entcom-0.1-4.src.rock 
+luarocks install --to=/path/to/your/project entcom-0.1-5.src.rock 
 ```
 
 Make sure to set the `package_path` correctly

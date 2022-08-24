@@ -1,8 +1,8 @@
 package = "entcom"
-version = "0.1-4"
+version = "0.1-5"
 
 source = {
-   url = "git+ssh://git@github.com/joe-opensrc/lua-entcom.git",
+   url = "git+https://github.com/joe-opensrc/lua-entcom.git",
    tag = 'v' .. version 
 }
 
