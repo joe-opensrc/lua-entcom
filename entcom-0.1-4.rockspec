@@ -3,7 +3,6 @@ version = "0.1-4"
 
 source = {
    url = "git+ssh://git@github.com/joe-opensrc/lua-entcom.git",
-
    tag = 'v' .. version 
 }
 
