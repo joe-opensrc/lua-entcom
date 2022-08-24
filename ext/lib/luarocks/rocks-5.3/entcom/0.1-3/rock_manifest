@@ -1,0 +1,15 @@
+rock_manifest = {
+   doc = {
+      ["TESTS.md"] = "359a0db9cbce103175944a214a9e1d9e"
+   },
+   ["entcom-0.1-3.rockspec"] = "ee92cbfde81ccbb5eb23495713bd84e2",
+   lua = {
+      entcom = {
+         ["utils.lua"] = "357b5baf528fe181ac864dc0748b265f"
+      },
+      ["entcom.lua"] = "29846a9c18125aab87a89b59a7dc0187"
+   },
+   test = {
+      ["entcom.lua"] = "beaef781d7943f7f74a893ffd0eacf64"
+   }
+}
