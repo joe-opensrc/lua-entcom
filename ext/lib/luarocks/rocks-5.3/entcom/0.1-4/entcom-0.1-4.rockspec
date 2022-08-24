@@ -1,9 +1,8 @@
 package = "entcom"
-version = "0.1-3"
+version = "0.1-4"
 
 source = {
    url = "git+ssh://git@github.com/joe-opensrc/lua-entcom.git",
-
    tag = 'v' .. version 
 }
 
@@ -29,7 +28,7 @@ build = {
    type = "builtin",
    modules = {
       entcom = "entcom.lua",
-      ["entcom.utils"] = "utils.lua",
+      ["entcom.utils"] = "entcom/utils.lua",
    },
    copy_directories = {
     "doc",
