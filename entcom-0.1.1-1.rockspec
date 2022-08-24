@@ -1,10 +1,12 @@
 package = "entcom"
 version = "0.1.1-1"
+
 source = {
    url = "git+ssh://git@github.com/joe-opensrc/lua-entcom.git",
    tag = "v0.1.1"
     
 }
+
 description = {
   summary = "A Hideously Functional⁽™⁾ ECS module",
   detailed = [[[
@@ -16,11 +18,12 @@ description = {
   homepage = "https://github.com/joe-opensrc/lua-entcom",
   license = "CC BY-SA"
 }
+
 dependencies = {
-  "lua ~> 5.3"
-  "inspect ~>	3.1.3-0"
-  "luaunit ~>	3.4-1"
-  "uuid	~> 0.3-1"
+  "lua ~> 5.3",
+  "inspect ~> 3.1.3-0",
+  "luaunit ~> 3.4-1",
+  "uuid ~> 0.3-1",
 }
 
 build = {
