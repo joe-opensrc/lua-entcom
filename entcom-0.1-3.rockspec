@@ -29,7 +29,7 @@ build = {
    type = "builtin",
    modules = {
       entcom = "entcom.lua",
-      ["entcom.utils"] = "utils.lua",
+      ["entcom.utils"] = "entcom/utils.lua",
    },
    copy_directories = {
     "doc",
