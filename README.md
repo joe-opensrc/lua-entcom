@@ -10,5 +10,5 @@ Primarily intended for use with Löve as part of a "game engine" :)
 
 ### Installation
 
-[doc/INSTALL.md](Installation_Instructions)
+[doc/INSTALL.md](doc/INSTALL.md)
 
