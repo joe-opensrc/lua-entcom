@@ -40,6 +40,7 @@ function TestFilter:setUp()
 
   self.sys = ecs:newSys(f)
   self.matchingEntity = { x = 1 }
+  self.exactMatchingEntity = { x = 1, y = 2 }
   
 end
 
@@ -75,6 +76,18 @@ function TestFilter:testNonMatchingEntity()
 
 end
 
+function TestFilter:testExactMatchingEntity()
+  local sys = self.sys
+  local e = self.exactMatchingEntity 
+
+  sys.options.exactMatch = true
+  lu.assertEquals( sys.options.exactMatch, true )
+
+  local r = sys:filterEntity(e)
+  lu.assertIsTable(r)
+  lu.assertEquals( r, e )
+
+end
 -- sys.options.matchSub = true
 -- sys.options.matchType = true
 -- sys.options.overrideFilter = true

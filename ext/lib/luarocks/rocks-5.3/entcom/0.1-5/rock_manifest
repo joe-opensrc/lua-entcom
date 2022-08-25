@@ -1,0 +1,17 @@
+rock_manifest = {
+   doc = {
+      ["INSTALL.md"] = "30f9a710524b4098a07b933344f34745",
+      ["TESTS.md"] = "5b2bbd034129a458219b2320c208674b",
+      ["USAGE.md"] = "93e9b3fd319cb3972df6ebfe61f2c38e"
+   },
+   ["entcom-0.1-5.rockspec"] = "daddec0c655a71517f33312618306799",
+   lua = {
+      entcom = {
+         ["utils.lua"] = "9f7d91de7eef8d29f5e59ee048facfa2"
+      },
+      ["entcom.lua"] = "d73691c417f9150d85164ecd4acee095"
+   },
+   test = {
+      ["entcom.lua"] = "2a578a92945d8f1276c9cd2d2dea46d7"
+   }
+}

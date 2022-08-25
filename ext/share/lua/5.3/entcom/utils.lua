@@ -1,6 +1,6 @@
-util = {}
+utils = {}
 
-function util.size(t)
+function utils.size(t)
   local count = 0
   for _ in pairs(t)
   do
@@ -9,19 +9,20 @@ function util.size(t)
   return count 
 end
 
-function printf(...)
+function utils.printf(...)
    local function wrapper(...) io.write(string.format(...)) end
    local status, result = pcall(wrapper, ...)
    if not status then error(result, 2) end
 end
 
-function pi(...)
+function utils.pi(...)
   printf("%s\n",  inspect( ... ) )
 end
 
 -- impl speedup
 local next = next
-function isEmpty(t)
+function utils.isEmpty(t)
   return next(t) == nil
 end
 
+return utils

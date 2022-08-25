@@ -1,8 +1,9 @@
 package.path = package.path .. ";ext/share/lua/5.3/?.lua"
+
 local uuid    = require("uuid")
 local inspect = require("inspect")
 
-require("entcom.utils")
+local utils = require("entcom.utils")
 
 System = {}
 System.metatable = {}
@@ -74,7 +75,7 @@ function System:filterEntity(ent,exact)
   local exact = exact or self.options.exactMatch 
   local hit = false
   local hitCount = 0
-  local fsize = util.size(self.filter)
+  local fsize = utils.size(self.filter)
  
   if self.options.overrideFilter
   then 
@@ -118,7 +119,7 @@ function System:filterEntity(ent,exact)
   end
 
   -- printf("hc: %d\n",  hitCount )
-  local hsize = util.size(ent)  
+  local hsize = utils.size(ent)  
   if hitCount == fsize
   then
    return ent
